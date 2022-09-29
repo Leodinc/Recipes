@@ -4,18 +4,20 @@ import './App.css';
 import Recipe from "./Recipe";
 
 const App = () =>{
-
+  //save id and key to access the API
   const APP_ID =  '6cff05e0';
   const APP_KEY = '088931f36969c54be1c2ad180b92b2ab';
 
+  //saving recipes, the content of searchbar and what we send to the API
   const [recipes, setRecipes] = useState([]);
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState('chocolate');
 
-  useEffect(() => { //useffect run only when the thing inside [] is changing; if empty only at launch
+  useEffect(() => { //useffect run only when the thing inside [] is changing; if empty only at launch. in this case, when we change the query we send by searching, it gets the new recipes
    getRecipes();
   }, [query]); 
-  
+
+  //getrecipes calls the API and saves the recipes inside recipes
   const getRecipes = async() =>{
     const response = await fetch(`https://api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`)
     const data = await response.json();
@@ -46,6 +48,7 @@ const App = () =>{
         calories={recipe.recipe.calories} 
         image={recipe.recipe.image}
         ingredients={recipe.recipe.ingredients}
+        url={recipe.recipe.url}
         />
     ))}
     </div>
